@@ -1,11 +1,790 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>AeroVision Drones - Tecnología Aérea Avanzada</title>
+    
+    <!-- Bootstrap 5 CSS via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-neon: #00f2fe;
+            --secondary-neon: #4facfe;
+            --dark-bg: #0b0f19;
+            --card-bg: #151c2e;
+            --border-color: rgba(0, 242, 254, 0.15);
+            --text-muted: #a0aec0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-neon);
+        }
+
+        .navbar-custom {
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, var(--primary-neon), var(--secondary-neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+        }
+
+        .nav-link {
+            color: #e2e8f0 !important;
+            font-weight: 500;
+            margin: 0 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-neon) !important;
+        }
+
+        .hero-container {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(11, 15, 25, 0.7) 0%, rgba(11, 15, 25, 0.95) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn-neon {
+            background: linear-gradient(45deg, var(--primary-neon), var(--secondary-neon));
+            color: #000;
+            font-weight: 700;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 50px;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-neon:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.8);
+            color: #000;
+        }
+
+        .btn-outline-neon {
+            background: transparent;
+            color: var(--primary-neon);
+            border: 2px solid var(--primary-neon);
+            font-weight: 600;
+            padding: 10px 28px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-neon:hover {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--primary-neon);
+            border-color: var(--primary-neon);
+            transform: translateY(-3px);
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            font-weight: 800;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--primary-neon);
+            border-radius: 2px;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-neon);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.25);
+        }
+
+        .product-img-wrapper {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .product-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-img-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .badge-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(11, 15, 25, 0.8);
+            border: 1px solid var(--primary-neon);
+            color: var(--primary-neon);
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .spec-item {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            padding: 6px 0;
+        }
+
+        .stat-box {
+            background: rgba(21, 28, 46, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            background: rgba(21, 28, 46, 0.9);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-neon);
+        }
+
+        .form-control, .form-select {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border-radius: 10px;
+            padding: 12px 16px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: var(--card-bg);
+            border-color: var(--primary-neon);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.25);
+        }
+
+        .map-container {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            height: 100%;
+            min-height: 300px;
+        }
+
+        /* Botón Flotante WhatsApp */
+        .btn-whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 25px;
+            right: 25px;
+            background-color: #25d366;
+            color: #fff;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn-whatsapp-float:hover {
+            background-color: #1eb954;
+            color: #fff;
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 <body>
-    <h1>Hola mundo</h1>
+
+    <!-- Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-custom">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" onclick="mostrarSeccionPrincipal()">
+                <i class="fa-solid fa-drone text-info"></i> AeroVision
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#inicio" onclick="mostrarSeccionPrincipal()">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#productos" onclick="mostrarSeccionPrincipal()">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#nosotros" onclick="mostrarSeccionPrincipal()">Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacto" onclick="mostrarSeccionPrincipal()">Contacto</a>
+                    </li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a class="btn btn-neon btn-sm" href="#contacto" onclick="mostrarSeccionPrincipal()">Cotizar Ahora</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL (HOME) -->
+    <div id="main-content">
+        <!-- Hero Section -->
+        <section id="inicio" class="hero-container">
+            <video class="hero-video" autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1920&q=80">
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-drone-flying-over-a-foggy-forest-42868-large.mp4" type="video/mp4">
+                Tu navegador no soporta videos HTML5.
+            </video>
+            
+            <div class="hero-overlay"></div>
+
+            <div class="container hero-content text-center text-white px-4">
+                <span class="badge bg-outline-info text-info border border-info mb-3 px-3 py-2 rounded-pill">
+                    <i class="fa-solid fa-bolt me-1"></i> Tecnología Aérea de Próxima Generación
+                </span>
+                <h1 class="display-3 fw-bold mb-4">
+                    Redefiniendo la Perspectiva <br>
+                    <span style="background: linear-gradient(45deg, var(--primary-neon), var(--secondary-neon)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        Desde el Cielo
+                    </span>
+                </h1>
+                <p class="lead text-light max-w-2xl mx-auto mb-5 opacity-90">
+                    Soluciones avanzadas de filmación 8K, inspección industrial autónoma y fotogrametría de alta precisión con la última tecnología en drones.
+                </p>
+                <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                    <a href="#productos" class="btn btn-neon text-uppercase">
+                        <i class="fa-solid fa-layer-group me-2"></i> Explorar Catálogo
+                    </a>
+                    <a href="#contacto" class="btn btn-outline-neon text-uppercase">
+                        <i class="fa-solid fa-headset me-2"></i> Contactar Asesor
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Productos -->
+        <section id="productos" class="py-5">
+            <div class="container py-4">
+                <div class="text-center">
+                    <h2 class="section-title">Nuestra Flota de Drones</h2>
+                    <p class="text-muted">Haz clic en cualquier drone para explorar sus especificaciones detalladas.</p>
+                </div>
+
+                <div class="row g-4 mt-2">
+                    <!-- Drone 1 -->
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="product-card d-flex flex-column" onclick="verDetalle('aerophantom')">
+                            <div class="product-img-wrapper">
+                                <span class="badge-category">Cine & Foto</span>
+                                <img src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?auto=format&fit=crop&w=800&q=80" alt="AeroPhantom Pro">
+                            </div>
+                            <div class="p-4 d-flex flex-column flex-grow-1">
+                                <h5 class="fw-bold mb-1">AeroPhantom Pro</h5>
+                                <p class="text-info small mb-3">Fotografía y Cinematografía Premium</p>
+                                
+                                <div class="specs-list mb-4 flex-grow-1">
+                                    <div class="spec-item d-flex justify-content-between">
+                                        <span><i class="fa-solid fa-camera me-2 text-info"></i> Cámara:</span>
+                                        <strong class="text-white">Sensor Hasselblad 8K</strong>
+                                    </div>
+                                    <div class="spec-item d-flex justify-content-between">
+                                        <span><i class="fa-solid fa-clock me-2 text-info"></i> Autonomía:</span>
+                                        <strong class="text-white">46 minutos</strong>
+                                    </div>
+                                </div>
+                                
+                                <button class="btn btn-outline-neon btn-sm w-100">
+                                    <i class="fa-solid fa-circle-info me-1"></i> Ver Detalle Completo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Drone 2 -->
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="product-card d-flex flex-column" onclick="verDetalle('apex')">
+                            <div class="product-img-wrapper">
+                                <span class="badge-category">FPV / Acción</span>
+                                <img src="https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=800&q=80" alt="Apex Velocity FPV">
+                            </div>
+                            <div class="p-4 d-flex flex-column flex-grow-1">
+                                <h5 class="fw-bold mb-1">Apex Velocity FPV</h5>
+                                <p class="text-info small mb-3">Toma Dinámica y Alta Velocidad</p>
+                                
+                                <div class="specs-list mb-4 flex-grow-1">
+                                    <div class="spec-item d-flex justify-content-between">
+                                        <span><i class="fa-solid fa-gauge-high me-2 text-info"></i> Vel. Máxima:</span>
+                                        <strong class="text-white">140 km/h</strong>
+                                    </div>
+                                    <div class="spec-item d-flex justify-content-between">
+                                        <span><i class="fa-solid fa-video me-2 text-info"></i> Video:</span>
+                                        <strong class="text-white">4K @ 120 fps</strong>
+                                    </div>
+                                </div>
+                                
+                                <button class="btn btn-outline-neon btn-sm w-100">
+                                    <i class="fa-solid fa-circle-info me-1"></i> Ver Detalle Completo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Drone 3 -->
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="product-card d-flex flex-column" onclick="verDetalle('titan')">
+                            <div class="product-img-wrapper">
+                                <span class="badge-category">Industrial</span>
+                                <img src="https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=800&q=80" alt="Titan Enterprise">
+                            </div>
+                            <div class="p-4 d-flex flex-column flex-grow-1">
+                                <h5 class="fw-bold mb-1">Titan Enterprise</h5>
+                                <p class="text-info small mb-3">Inspección Térmica y Estructuras</p>
+                                
+                                <div class="specs-list mb-4 flex-grow-1">
+                                    <div class="spec-item d-flex justify-content-between">
+                                        <span><i class="fa-solid fa-temperature-high me-2 text-info"></i> Sensor:</span>
+                                        <strong class="text-white">Térmico FLIR Dual</strong>
+                                    </div>
+                                    <div class="spec-item d-flex justify-content-between">
+                                        <span><i class="fa-solid fa-cloud-rain me-2 text-info"></i> Protección:</span>
+                                        <strong class="text-white">Certificación IP55</strong>
+                                    </div>
+                                </div>
+                                
+                                <button class="btn btn-outline-neon btn-sm w-100">
+                                    <i class="fa-solid fa-circle-info me-1"></i> Ver Detalle Completo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Drone 4 -->
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="product-card d-flex flex-column" onclick="verDetalle('agriscout')">
+                            <div class="product-img-wrapper">
+                                <span class="badge-category">Agrotech</span>
+                                <img src="https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=800&q=80" alt="AgriScout X40">
+                            </div>
+                            <div class="p-4 d-flex flex-column flex-grow-1">
+                                <h5 class="fw-bold mb-1">AgriScout X40</h5>
+                                <p class="text-info small mb-3">Fumigación y Mapeo de Cultivos</p>
+                                
+                                <div class="specs-list mb-4 flex-grow-1">
+                                    <div class="spec-item d-flex justify-content-between">
+                                        <span><i class="fa-solid fa-glass-water me-2 text-info"></i> Tanque:</span>
+                                        <strong class="text-white">40 Litros</strong>
+                                    </div>
+                                    <div class="spec-item d-flex justify-content-between">
+                                        <span><i class="fa-solid fa-wheat-awn me-2 text-info"></i> Rendimiento:</span>
+                                        <strong class="text-white">16 Hectáreas/hora</strong>
+                                    </div>
+                                </div>
+                                
+                                <button class="btn btn-outline-neon btn-sm w-100">
+                                    <i class="fa-solid fa-circle-info me-1"></i> Ver Detalle Completo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Nosotros -->
+        <section id="nosotros" class="py-5" style="background-color: rgba(15, 23, 42, 0.5);">
+            <div class="container py-4">
+                <div class="row align-items-center g-5">
+                    <div class="col-12 col-lg-6">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1521405924368-64c5b84bec60?auto=format&fit=crop&w=1000&q=80" alt="Equipo AeroVision" class="img-fluid rounded-4 shadow-lg border border-secondary">
+                            <div class="position-absolute bottom-0 end-0 bg-dark p-3 rounded-3 m-3 border border-info d-none d-sm-block">
+                                <p class="mb-0 text-info fw-bold"><i class="fa-solid fa-certificate me-2"></i> Pilotos Certificados FAA / EASA</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <span class="text-info fw-bold text-uppercase">Sobre AeroVision</span>
+                        <h2 class="display-6 fw-bold mt-2 mb-4">Líderes en Innovación y Tecnología Aérea</h2>
+                        <p class="text-muted leading-relaxed mb-4">
+                            Con más de 8 años en la industria aeroespacial no tripulada, en AeroVision combinamos la mejor ingeniería de hardware con pilotos expertos para entregar datos precisos e imágenes cinematográficas.
+                        </p>
+
+                        <div class="row g-3 mt-2">
+                            <div class="col-6 col-sm-4">
+                                <div class="stat-box">
+                                    <div class="stat-number">+1,200</div>
+                                    <div class="small text-muted">Horas de Vuelo</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-4">
+                                <div class="stat-box">
+                                    <div class="stat-number">100%</div>
+                                    <div class="small text-muted">Seguridad</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-4">
+                                <div class="stat-box">
+                                    <div class="stat-number">+450</div>
+                                    <div class="small text-muted">Proyectos</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Contacto y Ubicación -->
+        <section id="contacto" class="py-5">
+            <div class="container py-4">
+                <div class="text-center">
+                    <h2 class="section-title">Contáctanos y Ubicación</h2>
+                    <p class="text-muted">¿Tienes un proyecto en mente o requieres una cotización personalizada?</p>
+                </div>
+
+                <div class="row g-4 mt-2">
+                    <div class="col-12 col-lg-7">
+                        <div class="p-4 p-md-5 rounded-4" style="background-color: var(--card-bg); border: 1px solid var(--border-color);">
+                            <h4 class="fw-bold mb-4"><i class="fa-regular fa-paper-plane text-info me-2"></i> Envíanos un mensaje</h4>
+                            <form id="contactForm" onsubmit="handleFormSubmit(event)">
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label text-muted">Nombre Completo</label>
+                                        <input type="text" class="form-control" required>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label text-muted">Correo Electrónico</label>
+                                        <input type="email" class="form-control" required>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label text-muted">Teléfono</label>
+                                        <input type="tel" class="form-control" placeholder="+57 302 604 4632" required>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label text-muted">Interés Principal</label>
+                                        <select class="form-select" id="droneSelect">
+                                            <option value="General">Consulta General</option>
+                                            <option value="AeroPhantom Pro">AeroPhantom Pro</option>
+                                            <option value="Apex Velocity FPV">Apex Velocity FPV</option>
+                                            <option value="Titan Enterprise">Titan Enterprise</option>
+                                            <option value="AgriScout X40">AgriScout X40</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label text-muted">Mensaje</label>
+                                        <textarea class="form-control" rows="4" required></textarea>
+                                    </div>
+                                    <div class="col-12 mt-4">
+                                        <button type="submit" class="btn btn-neon w-100 py-3 text-uppercase">
+                                            Enviar Solicitud <i class="fa-solid fa-arrow-right ms-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-5 d-flex flex-column gap-4">
+                        <div class="p-4 rounded-4" style="background-color: var(--card-bg); border: 1px solid var(--border-color);">
+                            <h5 class="fw-bold mb-3">Información Directa</h5>
+                            <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
+                                <li class="d-flex align-items-center gap-3">
+                                    <div class="p-3 bg-dark rounded-circle text-info border border-secondary">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                    </div>
+                                    <div>
+                                        <span class="d-block text-muted small">Dirección Principal</span>
+                                        <strong class="text-white">Av. Tecnológica #102-45</strong>
+                                    </div>
+                                </li>
+                                <li class="d-flex align-items-center gap-3">
+                                    <div class="p-3 bg-dark rounded-circle text-info border border-secondary">
+                                        <i class="fa-solid fa-phone"></i>
+                                    </div>
+                                    <div>
+                                        <span class="d-block text-muted small">Teléfono / WhatsApp</span>
+                                        <strong class="text-white">+57 302 604 4632</strong>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Mapa Interactivo -->
+                        <div class="map-container flex-grow-1">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127357.54608307222!2d-76.56220803271168!3d3.421584344075191!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a6f0cc4913f1%3A0x33005a3962b0833a!2sCali%2C%20Valle%20del%20Cauca!5e0!3m2!1ses!2sco!4v1710000000000!5m2!1ses!2sco" 
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- VISTA INTERNA DE DETALLE DE PRODUCTO (Inicialmente oculta) -->
+    <div id="product-detail-view" class="d-none py-5 mt-5">
+        <div class="container py-4">
+            <button class="btn btn-outline-neon mb-4" onclick="mostrarSeccionPrincipal()">
+                <i class="fa-solid fa-arrow-left me-2"></i> Volver a la página principal
+            </button>
+
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <img id="detail-img" src="" class="img-fluid rounded-4 shadow-lg border border-info" alt="Drone Detail">
+                </div>
+                <div class="col-lg-6">
+                    <span id="detail-category" class="badge bg-dark text-info border border-info mb-2 fs-6">Categoría</span>
+                    <h1 id="detail-title" class="display-4 fw-bold mb-3">Nombre del Drone</h1>
+                    <p id="detail-description" class="lead text-muted mb-4">Descripción extendida del producto.</p>
+                    
+                    <div class="p-4 rounded-3 mb-4" style="background-color: var(--card-bg); border: 1px solid var(--border-color);">
+                        <h5 class="fw-bold mb-3 text-info"><i class="fa-solid fa-microchip me-2"></i> Especificaciones Tétecnicas:</h5>
+                        <ul id="detail-specs" class="list-unstyled mb-0 text-muted">
+                            <!-- Se carga con JS -->
+                        </ul>
+                    </div>
+
+                    <!-- Botón exclusivo de WhatsApp para este producto -->
+                    <a id="detail-ws-btn" href="#" target="_blank" class="btn btn-success btn-lg w-100 py-3 fw-bold rounded-pill shadow-lg d-flex align-items-center justify-content-center gap-2">
+                        <i class="fa-brands fa-whatsapp fs-4"></i> Cotizar este producto por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-4 border-top border-secondary mt-5" style="background-color: #070a12;">
+        <div class="container text-center text-md-between d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+            <div class="d-flex align-items-center gap-2">
+                <i class="fa-solid fa-drone text-info fs-4"></i>
+                <span class="fw-bold text-white">AeroVision Drones</span>
+            </div>
+            <div class="text-muted small">
+                © 2026 AeroVision Inc. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón Flotante Global de WhatsApp (3026044632) -->
+    <a href="https://wa.me/573026044632?text=Hola,%20quisiera%20recibir%20asesor%C3%ADa%20sobre%20sus%20drones" target="_blank" class="btn-whatsapp-float" title="Contactar por WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Toast Notification -->
+    <div class="position-fixed bottom-0 start-0 p-3" style="z-index: 11;">
+        <div id="statusToast" class="toast align-items-center text-white bg-dark border border-info" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-circle-check text-info fs-5"></i>
+                    <span>¡Solicitud enviada con éxito!</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Datos detallados de los productos
+        const productosData = {
+            aerophantom: {
+                nombre: "AeroPhantom Pro",
+                categoria: "Cine & Fotografía 8K",
+                imagen: "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?auto=format&fit=crop&w=1000&q=80",
+                descripcion: "Diseñado para producciones audiovisuales exigentes. Sensor de nivel profesional capaz de capturar video 8K RAW a 60fps con estabilización giroscópica de 3 ejes.",
+                specs: [
+                    "Cámara: Sensor Hasselblad CMOS 8K",
+                    "Autonomía de vuelo: 46 minutos continuos",
+                    "Distancia de transmisión: Hasta 15 km en alta definición",
+                    "Sensores: Evitación de obstáculos omnidireccional en 360°",
+                    "Resistencia al viento: Hasta 45 km/h"
+                ]
+            },
+            apex: {
+                nombre: "Apex Velocity FPV",
+                categoria: "FPV & Tomas Dinámicas",
+                imagen: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1000&q=80",
+                descripcion: "El drone de acción definitivo con chasis de fibra de carbono. Diseñado para persecuciones a alta velocidad y secuencias de acción cinematográficas.",
+                specs: [
+                    "Velocidad Máxima: 140 km/h",
+                    "Video: Grabación 4K a 120 fps",
+                    "Estructura: Chasis ultra-resistente en Fibra de Carbono 3mm",
+                    "Visión: Incluye integración con Gafas FPV HD OLED",
+                    "Aceleración: 0 a 100 km/h en 1.2 segundos"
+                ]
+            },
+            titan: {
+                nombre: "Titan Enterprise",
+                categoria: "Inspección Industrial",
+                imagen: "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=1000&q=80",
+                descripcion: "Plataforma industrial para inspección de plantas eléctricas, infraestructura y seguridad. Incorpora sensor térmico doble para detección de calor.",
+                specs: [
+                    "Cámara Térmica: FLIR Radiométrica 640x512",
+                    "Protección: Certificación IP55 contra lluvia y polvo",
+                    "Sistema de Navegación: Módulo RTK de precisión centimétrica",
+                    "Autonomía: 50 minutos por batería",
+                    "Carga útil: Iluminación estroboscópica y altavoz incluidos"
+                ]
+            },
+            agriscout: {
+                nombre: "AgriScout X40",
+                categoria: "Agrotech & Fumigación",
+                imagen: "https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=1000&q=80",
+                descripcion: "Drone agrícola especializado en pulverización de alta precisión y análisis de salud foliar mediante cámaras multiespectrales.",
+                specs: [
+                    "Tanque de Fumigación: Capacidad de 40 Litros",
+                    "Rendimiento de trabajo: 16 Hectáreas por hora",
+                    "Goteo inteligente: Boquillas atomizadas ultrasónicas",
+                    "Mapeo: Mapeo de terrenos autónomo mediante GPS RTK",
+                    "Radares: Radar de seguimiento de terreno integrado"
+                ]
+            }
+        };
+
+        // Función para mostrar el detalle de un producto
+        function verDetalle(idProd) {
+            const prod = productosData[idProd];
+            if (!prod) return;
+
+            document.getElementById('detail-title').textContent = prod.nombre;
+            document.getElementById('detail-category').textContent = prod.categoria;
+            document.getElementById('detail-description').textContent = prod.descripcion;
+            document.getElementById('detail-img').src = prod.imagen;
+
+            const specsContainer = document.getElementById('detail-specs');
+            specsContainer.innerHTML = '';
+            prod.specs.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'mb-2';
+                li.innerHTML = `<i class="fa-solid fa-check text-info me-2"></i> ${item}`;
+                specsContainer.appendChild(li);
+            });
+
+            // Enlace de WhatsApp directo para este producto
+            const msg = encodeURIComponent(`Hola, estoy interesado en recibir información y cotizar el drone: ${prod.nombre}`);
+            document.getElementById('detail-ws-btn').href = `https://wa.me/573026044632?text=${msg}`;
+
+            // Cambiar vista de secciones
+            document.getElementById('main-content').classList.add('d-none');
+            document.getElementById('product-detail-view').classList.remove('d-none');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Función para regresar a la página principal
+        function mostrarSeccionPrincipal() {
+            document.getElementById('product-detail-view').classList.add('d-none');
+            document.getElementById('main-content').classList.remove('d-none');
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const toastEl = document.getElementById('statusToast');
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+            document.getElementById('contactForm').reset();
+        }
+    </script>
 </body>
 </html>
